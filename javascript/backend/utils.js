@@ -19,7 +19,7 @@ module.exports = function(context) {
 //	             {id: END_TEST,  longName: "EndTest",             name:"End",      screenLimit: 1,                    handler: './javascript/backend/end.js',       instructionURL: '/assets/tests/end.html'+VERSION,            testURL:'/assets/tests/end.html'},
 	             {id: END_TEST,  longName: "EndTest",             name:"End",      screenLimit: 1,                    handler: './javascript/backend/end.js',       instructionURL: 'https://lancasteruni.qualtrics.com/SE/?SID=SV_726kfpD37MGLzq5', testURL:'https://lancasteruni.qualtrics.com/SE/?SID=SV_726kfpD37MGLzq5'}];
 	
-	var colours = ["", "purple", "red", "blue", "orange", "green"]; // user colors.
+	var colours = ["", "red", "blue", "green", "yellow", "purple"]; // user colors.
 	var testsOrder = [PRAC_AREA, PIC_CON, PIC_COMP, PAR_LINES, IDEA_GEN, DES_CHAL, ALT_USES, END_TEST]; // default tests order.
 	var messageMap=[[]]; //2-D array which maps an <object, operation> to a communication message.
 	fillMessageMap();
