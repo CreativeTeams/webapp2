@@ -135,7 +135,7 @@ var UNCHANGED = "Unchanged"
 var UPDATE_TIME_INTERVAL =  10;
 var INSTRUCTION_SCREEN =  0;
 var debug = 1;
-var COLOURS = ["", "red", "blue", "green", "yellow", "purple"];
+var COLOURS = ["", "purple", "red", "blue", "orange", "green"];
 var BACKEND_READY_MSG_INTERVAL = 2000;
 var PIC_COMP_MAX_SCREEN = 10;
 var PAR_LINES_MAX_SCREEN = 30;
@@ -160,6 +160,6 @@ var REDIS_TTL = 30*24*60*60;
 
 var DEMO = false;
 
-var DEMO_TEST_TIME = 60;
+var DEMO_TEST_TIME = 10;
 var DEMO_TIMER_ACTIVE = 1;
 var DEMO_TIMER_INACTIVE = 0;
