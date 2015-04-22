@@ -132,7 +132,7 @@ function setupTimer() {
 
 
 app.use(function(req, res, next){
-  logger.log('%s %s', req.method, req.url);
+  console.log('%s %s', req.method, req.url);
   next();
 });
 
