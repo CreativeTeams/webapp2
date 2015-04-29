@@ -251,7 +251,8 @@ module.exports = function(context)
         for(var i = 0; i<rows.length; i++) {                 	
             context.channel.sendToUser(context.session.AccessCode, utils.getMessage(rows[i].Object, rows[i].Operation), 
             		{userID: rows[i].UserID, screenNumber: rows[i].ScreenNumber, ObjectID: rows[i].Object, 
-            		 Operation: rows[i].Operation, OperationData: eval("(" + rows[i].OperationData + ")")}
+            		 Operation: rows[i].Operation, 
+            		 OperationData: eval("(" + rows[i].OperationData.replace(/\n/g, "\\\\n").replace(/\r/g, "\\\\r").replace(/\t/g, "\\\\t") + ")")}
             );
         }	 
         sendEndDataMsg();        
