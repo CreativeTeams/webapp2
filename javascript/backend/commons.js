@@ -252,7 +252,7 @@ module.exports = function(context)
             context.channel.sendToUser(context.session.AccessCode, utils.getMessage(rows[i].Object, rows[i].Operation), 
             		{userID: rows[i].UserID, screenNumber: rows[i].ScreenNumber, ObjectID: rows[i].Object, 
             		 Operation: rows[i].Operation, 
-            		 OperationData: eval("(" + rows[i].OperationData.replace(/\n/g, "\\\\n").replace(/\r/g, "\\\\r").replace(/\t/g, "\\\\t") + ")")}
+            		 OperationData: JSON.parse(rows[i].OperationData.replace(/\n/g, "\\\\n").replace(/\r/g, "\\\\r").replace(/\t/g, "\\\\t"))}
             );
         }	 
         sendEndDataMsg();        

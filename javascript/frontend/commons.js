@@ -122,7 +122,8 @@ function handleTitleBeingEdited(info) {
 }
 
 function handleUpdateTitle(info) {
-	console.log("UPDATE_TITLE_MSG: ", info);
+	console.log("UPDATE_TITLE_MSG-1: ", info);
+	info.OperationData.title = info.OperationData.title.split("\\n").join('\n');
 	//update title for everyone
 	if(document.getElementById('titleArea')){
 		if (document.getElementById('titleArea').value != info.OperationData.title) {
@@ -491,7 +492,8 @@ function closeAndStart(){
 
 function saveTitle(){
 	if (isValidText(document.getElementById('titleArea').value)) {
-		var transaction = {ScreenNumber: screenNumber, ObjectID: TITLE, Operation: ADD, OperationData: {"title": document.getElementById('titleArea').value}};
+		var transaction = {ScreenNumber: screenNumber, ObjectID: TITLE, Operation: ADD, 
+				OperationData: {"title": document.getElementById('titleArea').value}};
 		socket.emit(UPDATE_TITLE_MSG, transaction); 
 		Popup.hideAll();
 		changed = true;

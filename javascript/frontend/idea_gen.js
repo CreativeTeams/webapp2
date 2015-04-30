@@ -74,10 +74,14 @@ function sendAddIdea() {
 	descriptionText = document.getElementById("idea-description-textfield").value.trim();
 	
 	if (ideaText != "" && descriptionText != "") {
-		ideaTransaction = {ScreenNumber: 1, ObjectID: IDEA, Operation: ADD, OperationData: {title: ideaText, description:descriptionText, id:0}};
-		socket.emit(ADD_IDEA_MSG, ideaTransaction);
-		document.getElementById("idea-title-textfield").value = "";
-		document.getElementById("idea-description-textfield").value = "";		
+		if (isValidText(ideaText) && isValidText(descriptionText)) {
+			ideaTransaction = {ScreenNumber: 1, ObjectID: IDEA, Operation: ADD, OperationData: {title: ideaText, description:descriptionText, id:0}};
+			socket.emit(ADD_IDEA_MSG, ideaTransaction);
+			document.getElementById("idea-title-textfield").value = "";
+			document.getElementById("idea-description-textfield").value = "";
+		} else {
+			alert("There is invalid character(s), like \", in the title or description");
+		}
 	}
 }
 
@@ -104,8 +108,8 @@ function addIdea(idea) {
 	row.style.color = COLOURS[row.name];
 						
 	// Add some text to the new cells:
-	cell1.innerHTML = idea.OperationData.title;
-	cell2.innerHTML = idea.OperationData.description;		
+	cell1.innerHTML = idea.OperationData.title.split("\\n").join('\n');
+	cell2.innerHTML = idea.OperationData.description.split("\\n").join('\n');		
 }
 
 function sendDelIdea() {
@@ -124,16 +128,20 @@ function sendUpdateIdea() {
 	descriptionText = document.getElementById("idea-description-textfield").value.trim();
 
 	if (ideaText != "" && descriptionText != "") {
-		ideaTransaction = {ScreenNumber: 1, ObjectID: IDEA, Operation: UPDATE, OperationData: {title: ideaText, description:descriptionText, id:currentSelection}};
-		socket.emit(UPDATE_IDEA_MSG, ideaTransaction);
-		gotoAddMode();
+		if (isValidText(ideaText) && isValidText(descriptionText)) {		
+			ideaTransaction = {ScreenNumber: 1, ObjectID: IDEA, Operation: UPDATE, OperationData: {title: ideaText, description:descriptionText, id:currentSelection}};
+			socket.emit(UPDATE_IDEA_MSG, ideaTransaction);
+			gotoAddMode();
+		} else {
+			alert("There is invalid character(s), like \", in the title or description");			
+		}
 	}
 }
 
 function updateIdea(idea) {	
 	id = idea.OperationData.id;
-	document.getElementById(id).cells[0].innerHTML = idea.OperationData.title;
-	document.getElementById(id).cells[1].innerHTML = idea.OperationData.description;	
+	document.getElementById(id).cells[0].innerHTML = idea.OperationData.title.split("\\n").join('\n');
+	document.getElementById(id).cells[1].innerHTML = idea.OperationData.description.split("\\n").join('\n');	
 }
 
 function sendAddUpdateIdea() {

@@ -39,9 +39,13 @@ function sendGetResultsRsp() {
 function saveDescriptionAndSendResults() {
 	description = document.getElementById('descriptionArea').value;
 	if (description != '') {
-		Popup.hideAll();
-		changed = true;
-		sendResults();
+		if (isValidText(description)) {
+			Popup.hideAll();
+			changed = true;
+			sendResults();
+		} else {
+			alert("There is invalid character(s), like \", in the description.");
+		}
 	}
 
 }

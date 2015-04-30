@@ -65,9 +65,13 @@ function sendAddUse() {
 	useText = document.getElementById("use-textfield").value.trim();
 
 	if (useText != "") {
-		useTransaction = {ScreenNumber: 1, ObjectID: USE, Operation: ADD, OperationData: {use: useText, id:0}};
-		socket.emit(ADD_USE_MSG, useTransaction);
-		document.getElementById("use-textfield").value = "";
+		if (isValidText(useText)) { 
+			useTransaction = {ScreenNumber: 1, ObjectID: USE, Operation: ADD, OperationData: {use: useText, id:0}};
+			socket.emit(ADD_USE_MSG, useTransaction);
+			document.getElementById("use-textfield").value = "";
+		} else {
+			alert("There is invalid character(s), like \", in the title or description");			
+		}
 	}
 }
 
@@ -93,7 +97,7 @@ function addUse(use) {
 	row.style.color = COLOURS[row.name];
 						
 	// Add some text to the new cells:
-	cell.innerHTML = use.OperationData.use;		
+	cell.innerHTML = use.OperationData.use.split("\\n").join('\n');		
 }
 
 function sendDelUse() {
@@ -111,15 +115,19 @@ function sendUpdateUse() {
 	useText = document.getElementById("use-textfield").value.trim();
 
 	if (useText != "") {
-		useTransaction = {ScreenNumber: 1, ObjectID: USE, Operation: UPDATE, OperationData: {use: useText, id:currentSelection}};
-		socket.emit(UPDATE_USE_MSG, useTransaction);
-		gotoAddMode();
+		if (isValidText(useText)) { 		
+			useTransaction = {ScreenNumber: 1, ObjectID: USE, Operation: UPDATE, OperationData: {use: useText, id:currentSelection}};
+			socket.emit(UPDATE_USE_MSG, useTransaction);
+			gotoAddMode();
+		} else {
+			alert("There is invalid character(s), like \", in the title or description");			
+		}
 	}
 }
 
 function updateUse(use) {	
 	id = use.OperationData.id;
-	document.getElementById(id).cells[0].innerHTML = use.OperationData.use;	
+	document.getElementById(id).cells[0].innerHTML = use.OperationData.use.split("\\n").join('\n');	
 }
 
 function sendAddUpdateUse() {
