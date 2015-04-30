@@ -490,10 +490,14 @@ function closeAndStart(){
 }
 
 function saveTitle(){
-	var transaction = {ScreenNumber: screenNumber, ObjectID: TITLE, Operation: ADD, OperationData: {"title": document.getElementById('titleArea').value}};
-	socket.emit(UPDATE_TITLE_MSG, transaction); 
-	Popup.hideAll();
-	changed = true;
+	if (isValidText(document.getElementById('titleArea').value)) {
+		var transaction = {ScreenNumber: screenNumber, ObjectID: TITLE, Operation: ADD, OperationData: {"title": document.getElementById('titleArea').value}};
+		socket.emit(UPDATE_TITLE_MSG, transaction); 
+		Popup.hideAll();
+		changed = true;
+	} else {
+		alert("There is invalid character(s), like \", in the title.");
+	}
 }
 
 function cancelUpdateTitle(){
@@ -607,14 +611,37 @@ function isTitleEmpty() {
 	return document.getElementById('titleArea').value == "";
 }
 
+function isValidJSON(textEntry) {
+	try {
+		textObject = {"text":textEntry};
+		textObjectString = JSON.stringify(textObject);
+		textObject = eval("(" + textObjectString + ")");
+		return true;
+	} catch (ex) {
+		return false;
+	}	
+}
+
+function isValidSQL(textEntry) {	
+	return textEntry.indexOf('"') > -1 ? false : true;
+}
+
+function isValidText(textEntry) {
+	return isValidSQL(textEntry) && isValidJSON(textEntry);
+}
+
 function saveTitleAndSendResults() {
 	document.getElementById('titleArea').value = document.getElementById('titleArea2').value; 
 	if (!isTitleEmpty()) {
-		Popup.hideAll();
-		changed = true;
-		saveTitle();
-		eval(document.getElementById('titleArea2').ctCallBack);
-		document.getElementById('titleArea2').value = "";
+		if (isValidText(document.getElementById('titleArea').value)) {
+			Popup.hideAll();
+			changed = true;
+			saveTitle();
+			eval(document.getElementById('titleArea2').ctCallBack);
+			document.getElementById('titleArea2').value = "";
+		} else {
+			alert("There is invalid character(s), like \", in the title.");
+		}
 	}
 }
 
